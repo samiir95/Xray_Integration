@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2023-01-21T18:10:53 AST" name="Surefire suite" finished-at="2023-01-21T18:11:05 AST" duration-ms="12385">
+    <groups>
+    </groups>
+    <test started-at="2023-01-21T18:10:53 AST" name="Surefire test" finished-at="2023-01-21T18:11:05 AST" duration-ms="12385">
+      <class name="com.tests.PublishXrayResults">
+        <test-method is-config="true" signature="beforeSuite()[pri:0, instance:com.tests.PublishXrayResults@6b4a4e18]" started-at="2023-01-21T18:10:52 AST" name="beforeSuite" finished-at="2023-01-21T18:10:53 AST" duration-ms="867" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method signature="postExecutionReportBackToXray()[pri:0, instance:com.tests.PublishXrayResults@6b4a4e18]" started-at="2023-01-21T18:10:53 AST" name="postExecutionReportBackToXray" finished-at="2023-01-21T18:11:05 AST" duration-ms="12347" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postExecutionReportBackToXray -->
+      </class> <!-- com.tests.PublishXrayResults -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>
