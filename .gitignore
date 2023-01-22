@@ -1,0 +1,17 @@
+/target/
+/allure-results/
+/allure-report/
+/extent-reports/
+/test-output/
+/reports/
+.DS_Store
+/.idea/*
+/.git/*
+*.iml
+ajcore*.txt
+debug.log
+/.classpath
+/.project
+/bin/
+/src/main/resources/properties/*.properties
+POC_XrayTest.iml

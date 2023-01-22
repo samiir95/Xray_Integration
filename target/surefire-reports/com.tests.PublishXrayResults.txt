@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.tests.PublishXrayResults
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.786 s - in com.tests.PublishXrayResults
