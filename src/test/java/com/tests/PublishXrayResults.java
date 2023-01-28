@@ -1,5 +1,6 @@
 package com.tests;
 
+import com.google.common.base.CharMatcher;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -7,15 +8,14 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 import static utils.Constants.*;
 
 public class PublishXrayResults {
 
-    private File testExecutionReport = new File(TEST_EXECUTION_REPORT_PATH);
-    private File xrayLogin = new File(XRAY_LOGIN_PATH);
+    private final File testExecutionReport = new File(TEST_EXECUTION_REPORT_PATH);
+    private final File xrayLogin = new File(XRAY_LOGIN_PATH);
     private static RequestSpecification requestSpec;
 
     @BeforeSuite
@@ -31,53 +31,47 @@ public class PublishXrayResults {
     public void postExecutionReportBackToXray() throws FileNotFoundException {
 
         String xrayAuthToken = xrayUserLogin();
-        String xrayTestExecutionKey = xrayPostResults(xrayAuthToken, "SAM", "SAM-2");
+        String xrayTestExecutionKey = xrayPostResults(xrayAuthToken);
         System.out.println("Xray test execution key is: " + xrayTestExecutionKey);
 
     }
 
 
-    private String xrayUserLogin() throws FileNotFoundException {
+    private String xrayUserLogin() {
         // Login to xray to get token
-        String authToken =
-                given()
-                        .spec(requestSpec)
-                        .contentType(ContentType.JSON)
-                        .body(xrayLogin)
-                        .log().body()
-                        .when()
-                        .post("v1/authenticate")
-                        .then()
-                        .assertThat()
-                        .statusCode(200)
-                        .body(notNullValue())
-                        .extract().
-                        response().asPrettyString();
-
-        return authToken;
+        return given()
+                .spec(requestSpec)
+                .contentType(ContentType.JSON)
+                .body(xrayLogin)
+                .log().body()
+                .when()
+                .post("v1/authenticate")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body(notNullValue())
+                .extract().
+                response().asPrettyString();
     }
 
-    private String xrayPostResults(String token, String projectKey, String testPlanKey) throws FileNotFoundException {
+    private String xrayPostResults(String token) {
         // Publish reports to specific jira xray (project and test plan)
-        String testExecutionKey =
-                given()
-                        .log().all()
-                        .spec(requestSpec)
-                        .header("Content-Type", "text/xml")
-                        .header("Authorization", "Bearer " + token.substring(1, token.length() - 1))
-                        .queryParam("projectKey", projectKey)
-                        .queryParam("testPlanKey", testPlanKey)
-                        .body(testExecutionReport)
-                        .log().body()
-                        .when()
-                        .post("v2/import/execution/testng")
-                        .then()
-                        .assertThat()
-                        .statusCode(200)
-                        .body(notNullValue())
-                        .extract().
-                        path("key");
-        return testExecutionKey;
+        return given()
+                .log().all()
+                .spec(requestSpec)
+                .header("Content-Type", "text/xml")
+                .header("Authorization", "Bearer ".concat(CharMatcher.is('\"').trimFrom(token)))
+                .queryParam("projectKey", "SAM")
+                .queryParam("testPlanKey", "SAM-2")
+                .body(testExecutionReport)
+                .log().body()
+                .when()
+                .post("v2/import/execution/testng")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body(notNullValue())
+                .extract().
+                path("key");
     }
-
 }
