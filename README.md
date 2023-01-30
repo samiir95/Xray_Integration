@@ -23,4 +23,8 @@
 - If you have linux os then navigate to the ```run.sh``` file, open terminal then type ```bash run.sh``` and hit enter.
 
 ## For getting the "testng.xml" file which can be uploaded to Jira Xray:
-> Navigate to the ```target``` folder, expand it, and under ```surefire-reports``` you'll find the ```testng.xml``` file.
+> Navigate to the ```target``` folder, expand it, and under ```surefire-reports``` you'll find the ```testng.xml``` file. <br />
+
+## For deleting the "target" folder after execution:
+> Append this command ```rd /s /Q target``` to the run.bat file. <br />
+> Append this command ```rm -rf target``` to the run.sh file.
